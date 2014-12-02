@@ -21,7 +21,22 @@
 				numeric = false,
 				limit = parseInt(field.data('limit')),
 				fetched = false,
-				selectize;
+				selectize,
+				changeroot = field.find('select').children(),
+				root = Symphony.Context.get('root');
+				
+				changeroot.each(function(){
+					var text = $(this).text();						
+					var src = $(text).attr('src');
+					if(src){						
+						var src = src.split('workspace');
+						if(src[1]){
+								var content = text.replace(/<img[^>]*>/g,"");
+								var srcnew = '<img src="'+root+'/workspace'+src[1]+'" width="40" height="40"/>'+content;		
+								$(this).text(srcnew);
+						}						
+					}
+				});				
 
 			// Check for storage element
 			if(!storage.length) {
